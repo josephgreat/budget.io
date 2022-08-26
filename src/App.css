@@ -1,0 +1,71 @@
+.App {
+  text-align: center;
+}
+
+.custom-shape-divider-bottom {
+  position: relative;
+  top: -5em;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom .shape-fill {
+  fill: #fff;
+}
+
+.features-list ul{
+  justify-content: space-between;
+}
+.register-option ul{
+  justify-content: center;
+}
+.register-option ul li{
+  margin-bottom: 15px;
+}
+.features-list ul li{
+  margin-bottom: 15px;
+}
+
+div .button{
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+  height: auto;
+}
+.button .button-txt, .button .icon{
+  position: relative;
+  transition: all .4s ease;
+}
+.button .icon{
+  left: -35%;
+  width: 35%;
+  padding: 10px;
+}
+.button-txt{
+  width: 100%;
+  left: -13%;
+  padding: 7px;
+}
+.button:hover .button-txt{
+  left: 0;
+}
+.button:hover .icon{
+  left: 0;
+}
+
+
+.moneybag{
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+}
+
+.input_field:focus .label{
+  top: 10%;
+}
+
+@keyframes write {
+  from{top: 40%}
+  to{top: 45%}
+}

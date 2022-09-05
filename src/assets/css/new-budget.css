@@ -1,0 +1,23 @@
+.budgetform{
+    display: flex;
+    position: relative;
+    left: 0;
+    transition: left .5s ease;
+    height: 100%;
+}
+.budgetform .newBudgetField{
+    min-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    padding-right: 1rem;
+}
+
+.budgetform .newBudgetField:first-child{
+    margin-right: 1rem;
+}
+.category{
+    border: 1px solid rgb(225,225,225);
+    border-radius: .5rem;
+    padding: .3rem .5rem;
+    text-transform: capitalize;
+}

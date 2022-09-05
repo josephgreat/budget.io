@@ -1,32 +1,26 @@
-import { Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
+import { FormLabel, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
 import React, { useRef } from "react";
 
 export default function InputField({ label, icon, type, handleBudgetData }) {
   let labelRef = useRef(0);
   return (
-    <InputGroup pos={"relative"}>
-      <InputLeftAddon>{icon}</InputLeftAddon>
-      <Text
-        as="label"
-        // pos="absolute"
-        // left={"3.5rem"}
-        // color="gray.600"
-        fontWeight={"medium"}
-        // top="50%"
-        // transform={"translateY(-50%)"}
-        // px=".5rem"
-        ref={labelRef}
-      >
+    <>
+      <FormLabel ref={labelRef}>
         {label}
-      </Text>
-      <Input
-        fontWeight={"medium"}
-        _focus={{ outline: "none" }}
-        type={type ? type : "text"}
-        onChange={(e) =>
-          handleBudgetData(labelRef.current.innerText, e.target.value)
-        }
-      />
-    </InputGroup>
+      </FormLabel>
+      <InputGroup pos={"relative"}>
+        <InputLeftAddon>{icon}</InputLeftAddon>
+        <Input
+          fontWeight={"medium"}
+          _focus={{ outline: "none" }}
+          type={type ? type : "text"}
+          mb={{base: "4", md: "2"}}
+          onChange={(e) =>
+            handleBudgetData(labelRef.current.innerText, e.target.value)
+          }
+        />
+      </InputGroup>
+    
+    </>
   );
 }

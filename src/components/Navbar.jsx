@@ -25,8 +25,8 @@ import { UserContext } from "../App";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { userIsAuth, userCredentials } = useContext(UserContext);
-  const {id} = useParams();
-console.log(userCredentials);
+  const { id } = useParams();
+
   return (
     <Container
       maxW={"auto"}
@@ -41,7 +41,7 @@ console.log(userCredentials);
         justifyContent={"space-between"}
         alignItems={"center"}
       >
-        <Flex>  
+        <Flex>
           <MediaQuery size={"lg"} type="max">
             <IconButton
               onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -101,6 +101,7 @@ console.log(userCredentials);
             </Link>
           </ListItem>
           <ListItem
+            ml="auto"
             mr="2"
             my={{ base: "2", lg: "0" }}
             display={!userIsAuth ? "block" : "none"}
@@ -133,16 +134,19 @@ console.log(userCredentials);
           </ListItem>
         </List>
         <Flex ml="auto">
-          {userCredentials && (
+          {userCredentials ? (
             <Img
-            src={`${userCredentials.photoURL}`}
-            alt="user image"
-            srcSet={userCredentials.photoURL}
-            display={userIsAuth ? "block" : "none"}
-            mr=".5rem"
-            borderRadius={"full"}
-            width="2.5rem"
-          />
+              referrerPolicy="no-referrer"
+              src={`${userCredentials.photoURL}`}
+              alt="user image"
+              srcSet={userCredentials.photoURL}
+              display={userIsAuth ? "block" : "none"}
+              mr=".5rem"
+              borderRadius={"full"}
+              width="2.5rem"
+            />
+          ) : (
+            <Box></Box>
           )}
         </Flex>
       </Flex>

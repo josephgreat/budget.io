@@ -1,16 +1,28 @@
-import { Box, Container, Flex, HStack, Img, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Img, Text } from "@chakra-ui/react";
 import { getFirestore } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
-import { Route, Routes, Outlet, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useReducer, useState } from "react";
+import {  Outlet, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import Sidebar from "./Sidebar";
 
 export default function UserEnviro() {
   const db = getFirestore();
+  const id = useParams();
   let navigate = useNavigate();
   let { userCredentials } = useContext(UserContext);
-  if (userCredentials === null) {
-    navigate("/signup");
+  let budgetData = {
+    budget_name: "",
+    budget_amount: "",
+    budget_category: "",
+    currency: "",
+    uid: id,
+    expenses: [],
+    accomplished: false,
+    suspendend: false,
+  }
+  // const [data, dispatch] = useReducer(reducer, budgetData)
+  if (userCredentials === {}) {
+    return <p>Loading..</p>
   }
   const { displayName, photoURL } = userCredentials;
 
@@ -24,7 +36,7 @@ export default function UserEnviro() {
       justifyContent={"center"}
       pos="relative"
     >
-      <Sidebar w={[null, null, "40%", "5vw"]} mW="7vw" />
+      {/* <Sidebar w={[null, null, "40%", "5vw"]} mW="7vw" /> */}
       <Box
         bg={"white"}
         roundedRight={"3xl"}
@@ -38,7 +50,7 @@ export default function UserEnviro() {
         {userCredentials && (
           <Flex>
             <Text as={"span"}>
-              👏 Hi, {displayName.slice(0, displayName.indexOf(" "))}
+              👏 Hi, {displayName && displayName.slice(0, displayName.indexOf(" "))}
             </Text>
             {photoURL ? (
               <Img
@@ -46,6 +58,7 @@ export default function UserEnviro() {
                 alt="profile_pic"
                 rounded="full"
                 w={"3rem"}
+                referrerPolicy="no-referrer"
                 srcSet={photoURL}
               />
             ) : (
@@ -55,7 +68,7 @@ export default function UserEnviro() {
                 // color={`rgb(${randomBgCode(red)}, ${randomBgCode(green)}, ${randomBgCode(blue)}`}
                 // // backgroundColor={`rgb(${red}, ${green}, ${blue})`}
               >
-                {displayName[0]}
+                {displayName && displayName[0]}
               </Box>
             )}
           </Flex>

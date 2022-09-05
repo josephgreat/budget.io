@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { getAuth } from "firebase/auth";
-import { app } from "./firebase";
 import LandingPage from './pages/LandingPage';
 import './App.css';
 import {ChakraProvider, extendTheme} from '@chakra-ui/react';
@@ -9,6 +8,7 @@ import Auth from './pages/Auth';
 import Redirect from './components/Redirect';
 import UserEnviro from "./pages/UI/UserEnviro";
 import Dashboard from './pages/UI/Dashboard';
+import app from './firebase';
 
 export const UserContext = createContext();
 
@@ -40,24 +40,26 @@ const colors = {
 const theme = extendTheme({colors});
 
 function App() {
-  const [userCredentials, setUserCredentials] = useState();
+  const [userCredentials, setUserCredentials] = useState({});
   const [userIsAuth, setUserIsAuth] = useState(false);
+
   useEffect(() => {
     getAuth().onAuthStateChanged(user => {
       setUserCredentials({...user.providerData[0], uid: user.uid,});
       user ? setUserIsAuth(true) : setUserIsAuth(false);
-   });
-  }, [])
+    });
+  }, []);
+  
   return (
     <ChakraProvider theme={theme}>
-      <UserContext.Provider value={{userIsAuth, setUserIsAuth, userCredentials}}>
+      <UserContext.Provider value={{userIsAuth, setUserIsAuth, userCredentials, setUserCredentials}}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='login' element={<Auth title={'Login'} />} />
           <Route path='signup' element={<Auth title={'Sign up'} />} />
           <Route path='redirect' element={<Redirect />}/>
-          <Route path='user:id' element={<UserEnviro />}>
+          <Route path={`user:id`} element={<UserEnviro />}>
             <Route index element={<Dashboard />}></Route>
           </Route>
         </Routes>

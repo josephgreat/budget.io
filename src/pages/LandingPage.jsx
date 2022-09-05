@@ -1,5 +1,7 @@
 import { Box, Center, Container, Heading, Text } from '@chakra-ui/react';
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+import { UserContext } from '../App';
 import Footer from '../components/landingpage/Footer';
 import HowToUse from '../components/landingpage/HowToUse';
 import Jumbotron from '../components/landingpage/Jumbotron';
@@ -9,6 +11,13 @@ import Navbar from '../components/Navbar';
 import PolygonBg from '../components/PolygonBg';
 
 function LandingPage() {
+  let {userCredentials} = useContext(UserContext);
+  let param = useParams();
+  
+  useEffect(() => {
+    param.id = userCredentials !== {} ? userCredentials.uid : null; 
+  }, [userCredentials]);
+  
   return (
     <Container maxW={'100vw'} p='0'>      
       <Box position={'relative'} overflow='visible' color={'whiteAlpha.900'} maxHeight='100vh'>

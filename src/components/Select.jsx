@@ -15,7 +15,7 @@ import he from "he";
 export default function Select({ placeholder, options, type, targets, handler }) {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
-  let data = [];
+  let data = useMemo(() => [], []);
   let searchRef = useRef("");
 
   options.map((option) => {

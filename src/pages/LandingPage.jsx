@@ -16,7 +16,7 @@ function LandingPage() {
   
   useEffect(() => {
     param.id = userCredentials !== {} ? userCredentials.uid : null; 
-  }, [userCredentials, param.id]);
+  }, [userCredentials, param]);
   
   return (
     <Container maxW={'100vw'} p='0'>      

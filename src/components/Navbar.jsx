@@ -17,7 +17,7 @@ import {
   FaSignInAlt,
   FaBars,
   FaTimes,
-  FaMoon,
+  // FaMoon,
 } from "react-icons/fa";
 import MediaQuery from "../utils/useWindowSize";
 import { UserContext } from "../App";

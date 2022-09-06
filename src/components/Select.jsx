@@ -44,7 +44,7 @@ export default function Select({ placeholder, options, type, targets, handler })
 
   useEffect(() => {
     setFilteredData(data);
-  }, []);
+  }, [data]);
 
   let handleOptionClick = (value) => {
     searchRef.current.value = value;

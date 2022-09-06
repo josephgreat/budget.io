@@ -1,7 +1,7 @@
 import { Container, Flex, Heading, Box, Img } from '@chakra-ui/react'
 import React from 'react'
 import ButtonC from '../Button';
-import PolygonBg from '../PolygonBg';
+// import PolygonBg from '../PolygonBg';
 import MediaQuery from '../../utils/useWindowSize';
 import {FaPlus} from 'react-icons/fa'
 import phone from '../../assets/images/phone.png';

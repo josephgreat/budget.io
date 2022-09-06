@@ -23,7 +23,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { app } from "../firebase";
+import app from "../firebase";
 import ButtonC from "../components/Button";
 import MediaQuery from "../utils/useWindowSize";
 import Logo from "../components/Logo";
@@ -38,7 +38,7 @@ import {
 import MoneyBag from "../assets/JsxImgs/Money";
 import ExpensesImg from "../assets/JsxImgs/ExpensesImg";
 import ListImg from "../assets/JsxImgs/ListImg";
-import Pen from "../assets/JsxImgs/Pen";
+// import Pen from "../assets/JsxImgs/Pen";
 import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
@@ -47,13 +47,13 @@ export default function Auth({ title, context }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
-  const { setUserCredentials, setUserIsAuth } = useContext(context);
+  const { setUserCredentials } = useContext(context);
   let navigate = useNavigate();
   let { id } = useParams();
   let toast = useToast();
 
   let handleResponse = async (response) => {
-    const db = getFirestore();
+    const db = getFirestore(app);
 
     id = response.localId !== undefined ? response.localId : response.uid;
     let userInfo = {

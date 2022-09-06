@@ -45,7 +45,7 @@ export default function MediaQuery(props) {
     useEffect(() => {
         console.log(mql.matches)
         setIsRequiredsize(mql.matches)
-    }, [])
+    }, [mql.matches])
     mql.onchange = e => {
         if(e.matches) setIsRequiredsize(e.matches);
         else setIsRequiredsize(false);

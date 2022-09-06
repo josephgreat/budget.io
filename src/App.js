@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import LandingPage from './pages/LandingPage';
 import './App.css';
 import {ChakraProvider, extendTheme} from '@chakra-ui/react';
-import { Route, BrowserRouter, Routes, useParams } from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Auth from './pages/Auth';
 import Redirect from './components/Redirect';
 import UserEnviro from "./pages/UI/UserEnviro";
@@ -44,7 +44,7 @@ function App() {
   const [userIsAuth, setUserIsAuth] = useState(false);
 
   useEffect(() => {
-    getAuth().onAuthStateChanged(user => {
+    getAuth(app).onAuthStateChanged(user => {
       setUserCredentials({...user.providerData[0], uid: user.uid,});
       user ? setUserIsAuth(true) : setUserIsAuth(false);
     });

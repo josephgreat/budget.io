@@ -1,16 +1,20 @@
 import { Box, Container, Flex, Img, Text } from "@chakra-ui/react";
-import { getFirestore } from "firebase/firestore";
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import {  Outlet, useNavigate, useParams } from "react-router-dom";
+// import { getFirestore } from "firebase/firestore";
+import React, { createContext, useContext, useReducer,  } from "react";
+import {  Outlet, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
-import Sidebar from "./Sidebar";
+import reducer from "../../utils/reducers";
+// import Sidebar from "./Sidebar";
+
+export const BudgetContext = createContext();
 
 export default function UserEnviro() {
-  const db = getFirestore();
-  const id = useParams();
-  let navigate = useNavigate();
+  // const db = getFirestore();
+  const {id} = useParams();
+  // let navigate = useNavigate();
   let { userCredentials } = useContext(UserContext);
-  let budgetData = {
+  
+  let budgetDetails = {
     budget_name: "",
     budget_amount: "",
     budget_category: "",
@@ -20,7 +24,9 @@ export default function UserEnviro() {
     accomplished: false,
     suspendend: false,
   }
-  // const [data, dispatch] = useReducer(reducer, budgetData)
+ const [data, dispatch] = useReducer(reducer, budgetDetails)
+
+
   if (userCredentials === {}) {
     return <p>Loading..</p>
   }
@@ -73,7 +79,9 @@ export default function UserEnviro() {
             )}
           </Flex>
         )}
-        <Outlet />
+        <BudgetContext.Provider value={{data, dispatch}}>
+          <Outlet />
+        </BudgetContext.Provider>
       </Box>
     </Container>
   );

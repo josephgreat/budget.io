@@ -29,7 +29,7 @@ function LandingPage() {
         <div className="custom-shape-divider">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 319">
             <path 
-              fill="#fff" fill-opacity="1" 
+              fill="#fff" fillOpacity="1" 
               d="M0,96L48,117.3C96,139,192,181,288,170.7C384,160,
                   480,96,576,106.7C672,117,768,203,864,208C960,213,
                   1056,139,1152,112C1248,85,1344,107,1392,117.3L1440,

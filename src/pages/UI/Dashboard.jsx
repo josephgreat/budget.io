@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { FaPlusSquare } from "react-icons/fa";
 import ButtonC from "../../components/Button";
 import NewBudget from "./NewBudget";
+// import { BudgetContext } from "./UserEnviro";
 
 export default function Dashboard() {
   const [needsNewBudget, setNeedsNewBudget] = useState(false);
+  // let {data, dispatch} = useContext(BudgetContext);
+
   return (
     <Box>
       <Flex as="nav">

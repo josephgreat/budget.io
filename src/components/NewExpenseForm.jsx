@@ -13,7 +13,7 @@ import InputField from "./InputField";
 import Select from "./Select";
 
 export default function NewExpenseForm({ expenseUtils }) {
-  let [handleExpenseData, formSlide, addNewExpense, subCategory] = expenseUtils;
+  let {handleExpenseData, formSlide, addNewExpense, createBudget, subCategory} = expenseUtils;
   let [needsPrevBtn, setNeedsPrevBtn] = useState(true);
 
   let handleNewExpense = () => {
@@ -38,6 +38,7 @@ export default function NewExpenseForm({ expenseUtils }) {
         icon={<FaCoins />}
         handleBudgetData={handleExpenseData}
         type="number"
+        min="0"
       />
       <InputField
         label={"Expense description (optional)"}
@@ -75,6 +76,7 @@ export default function NewExpenseForm({ expenseUtils }) {
           bg={"primary.600"}
           color="rgb(255,255,255)"
           display={"block"}
+          onClick={() => createBudget("expense")}
         />
         <ButtonC
           text="Add Expense"

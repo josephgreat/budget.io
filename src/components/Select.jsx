@@ -25,14 +25,15 @@ export default function Select({ placeholder, options, type, targets, handler })
         ? he.decode(option[target])
         : option[target];
       targetString.push(value);
+      return targetString;
     });
     if (type === "currency")
     {
       data.push(`${targetString.join(" - ")}`);
-      return;
+      return data;
     }
     data.push(`${targetString.join("")}`);
-    return;
+    return data;
   });
 
   window.addEventListener("click", (e) => {
@@ -77,7 +78,7 @@ export default function Select({ placeholder, options, type, targets, handler })
           className="dropdown"
           p="2"
           bg="transparent"
-          transition={"all .3s ease"}
+          // transition={"all .3s ease"}
           cursor="pointer"
         >
           {openDropdown ? <FaCaretUp /> : <FaCaretDown />}
@@ -87,12 +88,12 @@ export default function Select({ placeholder, options, type, targets, handler })
         as={"ul"}
         maxH="30vh"
         overflow={"auto"}
-        pos={"absolute"}
+        // pos={"absolute"}
         top="120%"
-        w="30vw"
+        // w="30vw"
         h={openDropdown ? "auto" : "0"}
-        minW={"12rem"}
-        maxW="18rem"
+        // minW={"12rem"}
+        // maxW="18rem"
         visibility={openDropdown ? "visible" : "hidden"}
         backgroundColor={"rgb(255,255,255)"}
         zIndex={"25"}
@@ -105,7 +106,6 @@ export default function Select({ placeholder, options, type, targets, handler })
             <ListItem
               as="li"
               key={id}
-              fontWeight="600"
               cursor="pointer"
               px="2"
               py="1"

@@ -7,7 +7,7 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo } from "react";
 import { useEffect, useRef, useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import he from "he";

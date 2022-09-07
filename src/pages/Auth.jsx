@@ -42,17 +42,18 @@ import ListImg from "../assets/JsxImgs/ListImg";
 import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { UserContext } from "../App";
 
-export default function Auth({ title, context }) {
+export default function Auth({ title }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
-  const { setUserCredentials } = useContext(context);
+  const { setUserIsAuth } = useContext(UserContext);
   let navigate = useNavigate();
   let { id } = useParams();
   let toast = useToast();
 
-  let handleResponse = async (response) => {
+  let handleResponse = (response) => {
     const db = getFirestore(app);
 
     id = response.localId !== undefined ? response.localId : response.uid;
@@ -63,9 +64,13 @@ export default function Auth({ title, context }) {
       email: response.email,
       emailVerified:response.emailVerified,
     };
-    setUserCredentials(userInfo);
-    await setDoc(doc(db, "users", `user${id}`), userInfo);
-    navigate(`/user${id}`);
+    
+    // setUserCredentials(userInfo);
+    setDoc(doc(db, "users", `user${id}`), userInfo).then(() => {
+      
+      setUserIsAuth(true);
+      navigate(`/user${id}`);
+    });
   }
   let handleAuth = (purpose) => {
     const authentication = getAuth();
@@ -378,7 +383,7 @@ export default function Auth({ title, context }) {
           <Wrap className="register-option" mb="4">
             <WrapItem cursor={"pointer"} fontWeight={"bold"} mx="auto">
               <ButtonC
-                text={`${title} with Google`}
+                text={`Sign in with Google`}
                 icon={<FaGoogle />}
                 iconcolor={"secondary.900"}
                 iconbg="#fff"
@@ -391,7 +396,7 @@ export default function Auth({ title, context }) {
             </WrapItem>
             <WrapItem cursor={"pointer"} fontWeight={"bold"} mx="auto">
               <ButtonC
-                text={`${title} with Facebook`}
+                text={`Sign in with Facebook`}
                 icon={<FaFacebook />}
                 iconcolor={"darkblue"}
                 iconbg={"#fff"}

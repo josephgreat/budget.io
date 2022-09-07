@@ -7,25 +7,58 @@ import {
   Box,
   IconButton,
   Img,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { NavLink as ReactLink, useParams } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import ButtonC from "./Button";
 import Logo from "./Logo";
 import {
-  FaUserPlus,
-  FaSignInAlt,
   FaBars,
   FaTimes,
-  // FaMoon,
+  FaUserCog,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import MediaQuery from "../utils/useWindowSize";
 import { UserContext } from "../App";
+import { getAuth, signOut } from "firebase/auth";
+import app from "../firebase";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { userIsAuth, userCredentials } = useContext(UserContext);
+  const [needsUserExtas, setNeedsUserExtras] = useState(false);
+  const { userIsAuth, userCredentials, setUserCredentials, setUserIsAuth } = useContext(UserContext);
   const { id } = useParams();
+  let toast = useToast();
+
+  let handleUserLogout = () => {
+    let auth = getAuth(app);
+    signOut(auth).then(() => {
+      setUserCredentials({});
+      setUserIsAuth(false);
+      toast({
+        status: "success",
+        title: "You've successfully loggedout",
+        variant: "subtle",
+        position: "top-right",
+        duration: 3000
+      })
+    }).catch(error => {
+      toast({
+        status: "error",
+        title: `${error.message}`,
+        variant: "subtle",
+        position: "top-right",
+        duration: 3000
+      })
+    })
+  }
+
+  window.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("user")) {
+      setNeedsUserExtras(false);
+    }
+  });
 
   return (
     <Container
@@ -61,7 +94,7 @@ export default function Navbar() {
         </Flex>
         <List
           display={"flex"}
-          width={{ base: "60%", sm: "40%", md: "30%", lg: "70%" }}
+          width={{ base: "60%", sm: "40%", md: "30%", lg: "60%", xl: "70%" }}
           top={"75%"}
           height={"fit-content"}
           justifyContent={"center"}
@@ -100,53 +133,96 @@ export default function Navbar() {
               Dashboard
             </Link>
           </ListItem>
-          <ListItem
-            ml="auto"
-            mr="2"
-            my={{ base: "2", lg: "0" }}
-            display={!userIsAuth ? "block" : "none"}
-          >
-            <ButtonC
-              text="sign up"
-              color={"primary.500"}
-              transform="uppercase"
-              variant="solid"
-              bg="white"
-              icon={<FaUserPlus />}
-              iconcolor={"white"}
-              iconbg={"primary.500"}
-              path="/signup"
-            />
-          </ListItem>
-          <ListItem
-            mr="2"
-            my={{ base: "2", lg: "0" }}
-            display={!userIsAuth ? "block" : "none"}
-          >
-            <ButtonC
-              text="login"
-              color={"secondary.200"}
-              transform="uppercase"
-              variant="outline"
-              icon={<FaSignInAlt />}
-              path="/login"
-            />
-          </ListItem>
         </List>
-        <Flex ml="auto">
+        <Flex ml="auto" pos="relative" className="user">
+        <Box
+            ml="auto"
+            pr="2"
+            mr="2"
+            display={!userIsAuth ? "block" : "none"}
+            textTransform="capitalize"
+            borderRight={"1px solid rgba(255,255,255,.7)"}
+          >
+            <Link as={ReactLink} to={"/signup"}>Sign up</Link>
+          </Box>
+          <Box
+            display={!userIsAuth ? "block" : "none"}
+            textTransform="capitalize"
+          >
+            <Link as={ReactLink} to="/login">
+              Login
+            </Link>
+          </Box>
           {userCredentials ? (
             <Img
               referrerPolicy="no-referrer"
               src={`${userCredentials.photoURL}`}
-              alt="user image"
+              alt="img"
+              textTransform={"lowercase"}
               srcSet={userCredentials.photoURL}
               display={userIsAuth ? "block" : "none"}
               mr=".5rem"
               borderRadius={"full"}
               width="2.5rem"
+              height={"2.5rem"}
+              cursor={"pointer"}
+              className="user"
+              onClick={() => setNeedsUserExtras(!needsUserExtas)}
             />
           ) : (
             <Box></Box>
+          )}
+          {needsUserExtas && (
+            <List
+              bgColor={"secondary.50"}
+              py=".5rem"
+              color="primary.900"
+              top="150%"
+              left={"-100%"}
+              transform={"translateX(-20%)"}
+              pos="absolute"
+              borderRadius={".6rem"}
+              zIndex={"15"}
+              _before={{
+                content: '""',
+                borderTop: "1.2rem solid #fff5b3",
+                borderLeft: "1.2rem solid transparent",
+                pos: "absolute",
+                top: "-20%",
+                left: "75%",
+                transform: "rotate(-45deg) translateX(-75%)",
+              }}
+            >
+              <ListItem
+                px="1rem"
+                py=".5rem"
+                cursor={"pointer"}
+                transition={"all .2s ease"}
+                _hover={{ backgroundColor: "rgba(255,255,255,1)" }}
+                display="flex"
+                alignItems={"center"}
+              >
+                <FaUserCog />
+                <Text as="span" ml="1" fontWeight="500">
+                  Settings
+                </Text>
+              </ListItem>
+              <ListItem
+                px="1rem"
+                py=".5rem"
+                cursor={"pointer"}
+                transition={"all .2s ease"}
+                _hover={{ backgroundColor: "rgba(255,255,255,1)" }}
+                display="flex"
+                alignItems={"center"}
+                onClick={handleUserLogout}
+              >
+                <FaSignOutAlt />
+                <Text as="span" ml="1" fontWeight="500">
+                  Logout
+                </Text>
+              </ListItem>
+            </List>
           )}
         </Flex>
       </Flex>

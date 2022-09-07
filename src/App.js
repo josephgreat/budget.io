@@ -45,10 +45,10 @@ function App() {
 
   useEffect(() => {
     getAuth(app).onAuthStateChanged(user => {
-      setUserCredentials({...user.providerData[0], uid: user.uid,});
+      user && setUserCredentials({...user.providerData[0], uid: user.uid,});
       user ? setUserIsAuth(true) : setUserIsAuth(false);
     });
-  }, []);
+  }, [userIsAuth]);
   
   return (
     <ChakraProvider theme={theme}>
